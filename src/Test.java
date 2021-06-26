@@ -1,5 +1,6 @@
 import entity.DishCategory;
 import entitydatabase.DishCategoryDAO;
+import userinterface.LoginFrame;
 import userinterface.MainFrame;
 import userinterface.deskmanage.DeskManagePanel;
 import userinterface.dishcategorymanage.DishCategoryManagePanel;
@@ -66,13 +67,14 @@ public class Test {
 //        dishCategories.add(b);
 //        dishCategories.add(c);
 
-        JFrame jf = new JFrame();
-        jf.setVisible(true);
-        jf.setTitle("Test");
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setSize(1920,1080);
-        jf.setLocationRelativeTo(null);
-        jf.add(new DeskManagePanel());  DishCategoryDAO dishCategoryDAO = new DishCategoryDAO();
+//        JFrame jf = new JFrame();
+//        jf.setVisible(true);
+//        jf.setTitle("Test");
+//        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        jf.setSize(1920,1080);
+//        jf.setLocationRelativeTo(null);
+//        jf.add(new DeskManagePanel());  DishCategoryDAO dishCategoryDAO = new DishCategoryDAO();
+
 //
 //        DishCategory d = new DishCategory();
 //        d.setName("E");
@@ -86,7 +88,7 @@ public class Test {
 
 //        new Table();
 
-//        new MainFrame();
+        new LoginFrame();
 //        System.out.println(new Super().getI());
 //        System.out.println(new sub().getI());
     }

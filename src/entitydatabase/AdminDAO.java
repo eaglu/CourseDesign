@@ -1,7 +1,6 @@
 package entitydatabase;
 
 import entity.Admin;
-import entity.DishCategory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +15,11 @@ public class AdminDAO implements BaseDAO<Admin>{
         Connection conn = DBManager.getConn();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from admin order by id = ?";
+        String sql = "select * from admin order by id";
         List<Admin> list = new ArrayList<>();
         try{
             ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -48,12 +48,15 @@ public class AdminDAO implements BaseDAO<Admin>{
         String sql = "insert into admin(username,password) values (?,?)";
         try{
             ps = conn.prepareStatement(sql);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         try{
             for(Admin admin:list){
-
+                ps.setString(1,admin.getUsername());
+                ps.setString(2,admin.getPassword());
+                ps.executeUpdate();
             }
         } catch (Exception e) {
             e.printStackTrace();

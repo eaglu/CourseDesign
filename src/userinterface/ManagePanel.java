@@ -1,8 +1,5 @@
 package userinterface;
 
-import entity.DishCategory;
-import entitydatabase.DishCategoryDAO;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -12,7 +9,7 @@ public abstract class ManagePanel extends JPanel {
     protected JScrollPane jScrollPane;
     protected JPanel bottomPanel;
     protected JTable jTable;
-    protected JButton add,delete,save,update;
+    protected JButton add,delete,save,update,search;
     protected GridBagLayout gridBagLayout;
     protected GridBagConstraints pos;
     protected DefaultTableModel model;
@@ -24,7 +21,8 @@ public abstract class ManagePanel extends JPanel {
         add = new JButton("添加");
         delete = new JButton("删除");
         save = new JButton("保存");
-        update = new JButton("更新");
+        update = new JButton("修改");
+        search = new JButton("搜索");
 
         gridBagLayout = new GridBagLayout();
         setLayout(gridBagLayout);
@@ -37,6 +35,7 @@ public abstract class ManagePanel extends JPanel {
         bottomPanel.add(delete);
         bottomPanel.add(update);
         bottomPanel.add(save);
+        bottomPanel.add(search);
 
         add();
         delete();
@@ -75,7 +74,11 @@ public abstract class ManagePanel extends JPanel {
     public abstract void deleteLine();
 
     public void save(){
-        save.addActionListener(e->saveData());
+        save.addActionListener(e->{
+            saveData();
+            updateTable();
+          }
+        );
     }
 
     public void update(){
@@ -88,4 +91,8 @@ public abstract class ManagePanel extends JPanel {
 
     public abstract void getTable();
 
+    public void updateTable(){
+        getTable();
+        updateUI();
+    }
 }

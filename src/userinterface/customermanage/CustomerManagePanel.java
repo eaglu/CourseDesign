@@ -44,8 +44,8 @@ public class CustomerManagePanel extends ManagePanel {
             rowData.add(single);
         }
 
-        rowLength = model.getRowCount();
         model.setDataVector(rowData,columnData);
+        rowLength = model.getRowCount();
         jTable = new JTable(model);
     }
 
@@ -58,9 +58,12 @@ public class CustomerManagePanel extends ManagePanel {
             Customer customer = new Customer();
             customer.setId(Integer.parseInt(model.getValueAt(j, 0).toString()));
             customer.setName(model.getValueAt(j, 1).toString());
-            customer.setSex(model.getValueAt(j, 2).toString());
-            customer.setCompany(model.getValueAt(j,3).toString());
-            customer.setTel(model.getValueAt(j,4).toString());
+            try{
+                customer.setSex(model.getValueAt(j,2).toString());
+                customer.setCompany(model.getValueAt(j,3).toString());
+                customer.setTel(model.getValueAt(j,4).toString());
+            } catch (Exception e) {
+            }
             customer.setCardID(model.getValueAt(j,5).toString());
             customers.add(customer);
         }
@@ -76,9 +79,11 @@ public class CustomerManagePanel extends ManagePanel {
             Customer customer = new Customer();
             customer.setId(Integer.parseInt(model.getValueAt(i, 0).toString()));
             customer.setName(model.getValueAt(i, 1).toString());
-            customer.setSex(model.getValueAt(i, 2).toString());
-            customer.setCompany(model.getValueAt(i,3).toString());
-            customer.setTel(model.getValueAt(i,4).toString());
+            try {
+                customer.setSex(model.getValueAt(i, 2).toString());
+                customer.setCompany(model.getValueAt(i, 3).toString());
+                customer.setTel(model.getValueAt(i, 4).toString());
+            }catch (Exception e){}
             customer.setCardID(model.getValueAt(i,5).toString());
             customers.add(customer);
         }
@@ -90,13 +95,18 @@ public class CustomerManagePanel extends ManagePanel {
         List<Customer> customers = new ArrayList<>();
         for(int i=rowLength;i<model.getRowCount();i++){
             Customer customer = new Customer();
-            customer.setName(model.getValueAt(i, 1).toString());
-            customer.setSex(model.getValueAt(i, 2).toString());
-            customer.setCompany(model.getValueAt(i,3).toString());
-            customer.setTel(model.getValueAt(i,4).toString());
+            customer.setName(model.getValueAt(i, 1).toString());;
+            try{
+                customer.setSex(model.getValueAt(i,2).toString());
+                customer.setCompany(model.getValueAt(i,3).toString());
+                customer.setTel(model.getValueAt(i,4).toString());
+            } catch (Exception e) {
+            }
             customer.setCardID(model.getValueAt(i,5).toString());
             customers.add(customer);
         }
         new CustomerDAO().saveList(customers);
     }
+
+
 }

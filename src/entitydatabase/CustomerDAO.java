@@ -17,10 +17,11 @@ public class CustomerDAO implements BaseDAO<Customer> {
         Connection conn = DBManager.getConn();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from customer order by id = ?";
+        String sql = "select * from customer order by id";
         List<Customer> list = new ArrayList<>();
         try{
             ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -119,6 +120,7 @@ public class CustomerDAO implements BaseDAO<Customer> {
                 ps.setString(3,customer.getCompany());
                 ps.setString(4,customer.getTel());
                 ps.setString(5,customer.getCardID());
+                ps.setInt(6,customer.getId());
                 ps.executeUpdate();
             }
         } catch (SQLException throwables) {

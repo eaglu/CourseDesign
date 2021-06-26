@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class DishCategoryManagePanel extends ManagePanel {
+    DishCategorySearchFrame categorySearchFrame;
 
     public DishCategoryManagePanel(){
+        search.addActionListener(e->new DishCategorySearchFrame());
     }
 
     public void getTable(){

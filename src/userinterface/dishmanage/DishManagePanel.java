@@ -14,16 +14,23 @@ import java.util.Vector;
 
 public class DishManagePanel extends ManagePanel {
     public DishManagePanel(){
+        search.addActionListener(e->new DishSearchFrame());
     }
     @Override
     public void getTable() {
-        DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return 0 > row || row >= getRowCount() || column != 0;
+            }
+        };
+
         Vector columnData = new Vector();
         columnData.add("序号");
         columnData.add("名称");
-        columnData.add("类别名");
+        columnData.add("类别代码");
         columnData.add("图片");
-        columnData.add("代码");
+        columnData.add("菜品代码");
         columnData.add("单位");
         columnData.add("单价");
         columnData.add("状态");
@@ -42,9 +49,19 @@ public class DishManagePanel extends ManagePanel {
             rowData.add(single);
         }
 
-        rowLength = model.getRowCount();
+        JComboBox<String> comboBox = new JComboBox<>(new String[]{"在售","未售"});
         model.setDataVector(rowData,columnData);
+        rowLength = model.getRowCount();
         jTable = new JTable(model);
+        jTable.getColumnModel().getColumn(7).setCellEditor(new DefaultCellEditor(comboBox));
+        List<Integer> categoryidList = new ArrayList<>();
+
+        for(DishCategory dishCategory:new DishCategoryDAO().getList()){
+            categoryidList.add(dishCategory.getId());
+        }
+        JComboBox jComboBox = new JComboBox(categoryidList.toArray());
+        jTable.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(jComboBox));
+
     }
 
     @Override
@@ -53,9 +70,7 @@ public class DishManagePanel extends ManagePanel {
 
         int[] rowList = jTable.getSelectedRows();
         for (int i : rowList) {
-            int id = Integer.parseInt(model.getValueAt(i,0).toString());
             Dish dish = new Dish();
-            dish.setId(id);
             dish.setName(model.getValueAt(i,1).toString());
             dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
             dish.setPic(model.getValueAt(i,3).toString());
@@ -73,9 +88,7 @@ public class DishManagePanel extends ManagePanel {
     public void saveData() {
         List<Dish> dishes = new ArrayList<>();
         for(int i=rowLength;i<model.getRowCount();i++){
-            int id = Integer.parseInt(model.getValueAt(i,0).toString());
             Dish dish = new Dish();
-            dish.setId(id);
             dish.setName(model.getValueAt(i,1).toString());
             dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
             dish.setPic(model.getValueAt(i,3).toString());
@@ -83,6 +96,7 @@ public class DishManagePanel extends ManagePanel {
             dish.setUnit(model.getValueAt(i,5).toString());
             dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
             dish.setStatus(model.getValueAt(i,7).toString());
+            dishes.add(dish);
         }
         new DishDAO().saveList(dishes);
     }

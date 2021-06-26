@@ -1,7 +1,12 @@
 package userinterface;
 
+import entity.Admin;
+import entitydatabase.AdminDAO;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginFrame extends JFrame {
     private final int HEIGHT = 200;
@@ -23,9 +28,6 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame(){
         super("登陆");
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(WIDTH,HEIGHT);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints pos = new GridBagConstraints();
@@ -43,6 +45,14 @@ public class LoginFrame extends JFrame {
         passwordPf = new JPasswordField(20);
 
         loginB = new JButton("登 陆");
+        loginB.addActionListener(e->{
+            if(verify()){
+                new MainFrame();
+                dispose();
+            }else {
+                JOptionPane.showMessageDialog(loginP,"密码或账号错误，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         pos.weighty=1;
         gridBagLayout.addLayoutComponent(usernameL,pos);
@@ -64,6 +74,29 @@ public class LoginFrame extends JFrame {
 
         setContentPane(loginP);
         setLocationRelativeTo(null);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(WIDTH,HEIGHT);
+        repaint();
+    }
 
+    public boolean verify(){
+        String username = usernameTf.getText();
+        String password = new String((passwordPf.getPassword()));
+
+        boolean flag = false;
+
+        for(Admin admin:new AdminDAO().getList()){
+            System.out.println(username);
+            System.out.println(password);
+            System.out.println(admin.getUsername());
+            System.out.println(admin.getPassword());
+            if(admin.getUsername().equals(username)&&admin.getPassword().equals(password)){
+                flag = true;
+                break;
+            }
+        }
+
+        return flag;
     }
 }
