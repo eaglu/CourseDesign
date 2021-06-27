@@ -66,11 +66,12 @@ public class DishManagePanel extends ManagePanel {
 
     @Override
     public void deleteLine() {
-        List<DishCategory> dishCategories = new ArrayList<>();
+        List<Dish> dishes = new ArrayList<>();
 
         int[] rowList = jTable.getSelectedRows();
         for (int i : rowList) {
             Dish dish = new Dish();
+            dish.setId(Integer.parseInt(model.getValueAt(i, 0).toString()));
             dish.setName(model.getValueAt(i,1).toString());
             dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
             dish.setPic(model.getValueAt(i,3).toString());
@@ -78,16 +79,17 @@ public class DishManagePanel extends ManagePanel {
             dish.setUnit(model.getValueAt(i,5).toString());
             dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
             dish.setStatus(model.getValueAt(i,7).toString());
+            dishes.add(dish);
         }
 
-        new DishCategoryDAO().deleteList(dishCategories);
+        new DishDAO().deleteList(dishes);
         model.removeRow(jTable.getSelectedRow());
     }
 
     @Override
     public void saveData() {
         List<Dish> dishes = new ArrayList<>();
-        for(int i=rowLength;i<model.getRowCount();i++){
+        for(int i=rowLength;i<(model.getRowCount());i++){
             Dish dish = new Dish();
             dish.setName(model.getValueAt(i,1).toString());
             dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
@@ -115,7 +117,17 @@ public class DishManagePanel extends ManagePanel {
             dish.setUnit(model.getValueAt(i,5).toString());
             dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
             dish.setStatus(model.getValueAt(i,7).toString());
+            dishes.add(dish);
         }
         new DishDAO().updateList(dishes);
+    }
+
+    @Override
+    public void searchByRule() {
+        for(int i=0;i<model.getRowCount();i++){
+            if(model.getValueAt(i,1).equals(labelContent)||model.getValueAt(i,2).equals(labelContent)){
+                jTable.setRowSelectionInterval(i,i);
+            }
+        }
     }
 }

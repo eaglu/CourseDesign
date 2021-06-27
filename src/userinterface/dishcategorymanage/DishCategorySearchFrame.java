@@ -10,7 +10,7 @@ public class DishCategorySearchFrame extends JFrame {
     private JButton confirm;
     private JLabel id,name;
     private JTextField idT,nameT;
-
+    private JTextArea info;
     public void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h){
         constraints.gridx = x;
         constraints.gridy = y;

@@ -7,13 +7,14 @@ import java.util.Vector;
 
 public abstract class ManagePanel extends JPanel {
     protected JScrollPane jScrollPane;
-    protected JPanel bottomPanel;
+    protected JPanel bottomPanel,searchPanel;
     protected JTable jTable;
     protected JButton add,delete,save,update,search;
     protected GridBagLayout gridBagLayout;
     protected GridBagConstraints pos;
     protected DefaultTableModel model;
     protected int rowLength = -1;
+    protected String labelContent;
 
     public ManagePanel(){
         getTable();
@@ -39,8 +40,9 @@ public abstract class ManagePanel extends JPanel {
 
         add();
         delete();
-        save();
         update();
+        save();
+        search();
 
         add(jScrollPane);
         add(bottomPanel);
@@ -52,6 +54,49 @@ public abstract class ManagePanel extends JPanel {
         pos.gridheight=GridBagConstraints.BOTH;
         pos.fill=GridBagConstraints.BOTH;
         gridBagLayout.addLayoutComponent(jScrollPane,pos);
+    }
+
+    public void addSearchPanel(){
+        JPanel panel;
+        JPanel bottomPanel;
+        JButton confirm;
+        JLabel label;
+        JTextField content;
+        JTextArea info;
+
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        GridBagConstraints pos = new GridBagConstraints();
+
+        searchPanel = new JPanel();
+        searchPanel.setLayout(gridBagLayout);
+
+
+        label = new JLabel("序号");
+
+        content = new JTextField(20);
+
+
+        confirm = new JButton("确 定");
+        confirm.addActionListener(e->{
+            labelContent =  content.getText();
+            searchByRule();
+        });
+
+        pos.weighty=1;
+        gridBagLayout.addLayoutComponent(label,pos);
+        gridBagLayout.addLayoutComponent(content,pos);
+
+        pos.gridy=2;
+        pos.gridx=1;
+        gridBagLayout.addLayoutComponent(confirm,pos);
+
+        searchPanel.add(label);
+        searchPanel.add(content);
+        searchPanel.add(confirm);
+
+        setVisible(true);
+        repaint();
+        add(searchPanel);
     }
 
     public void addLine(){
@@ -95,4 +140,14 @@ public abstract class ManagePanel extends JPanel {
         getTable();
         updateUI();
     }
+
+    public void search(){
+        search.addActionListener(e->{
+            bottomPanel.setVisible(false);
+            addSearchPanel();
+            System.out.println(labelContent);
+        });
+    }
+
+    public abstract void searchByRule();
 }

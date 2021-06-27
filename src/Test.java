@@ -1,10 +1,6 @@
 import entity.DishCategory;
 import entitydatabase.DishCategoryDAO;
 import userinterface.LoginFrame;
-import userinterface.MainFrame;
-import userinterface.deskmanage.DeskManagePanel;
-import userinterface.dishcategorymanage.DishCategoryManagePanel;
-import userinterface.dishmanage.DishManagePanel;
 
 import javax.swing.*;
 import java.util.Vector;
@@ -88,8 +84,10 @@ public class Test {
 
 //        new Table();
 
+//        new LoginFrame();
+////        System.out.println(new Super().getI());
+////        System.out.println(new sub().getI());
+
         new LoginFrame();
-//        System.out.println(new Super().getI());
-//        System.out.println(new sub().getI());
     }
 }

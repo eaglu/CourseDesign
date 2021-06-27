@@ -40,8 +40,8 @@ public class DeskManagePanel extends ManagePanel {
             rowData.add(single);
         }
 
-        rowLength = model.getRowCount();
         model.setDataVector(rowData,columnData);
+        rowLength = model.getRowCount();
         jTable = new JTable(model);
     }
 
@@ -89,5 +89,10 @@ public class DeskManagePanel extends ManagePanel {
             desks.add(desk);
         }
         new DeskDAO().saveList(desks);
+    }
+
+    @Override
+    public void searchByRule() {
+
     }
 }

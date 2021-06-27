@@ -108,5 +108,8 @@ public class CustomerManagePanel extends ManagePanel {
         new CustomerDAO().saveList(customers);
     }
 
+    @Override
+    public void searchByRule() {
 
+    }
 }
