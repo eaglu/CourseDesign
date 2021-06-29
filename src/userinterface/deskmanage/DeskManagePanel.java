@@ -43,6 +43,9 @@ public class DeskManagePanel extends ManagePanel {
         model.setDataVector(rowData,columnData);
         rowLength = model.getRowCount();
         jTable = new JTable(model);
+
+        JComboBox<String> comboBox = new JComboBox<>(new String[]{"可用","不可用"});
+        jTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboBox));
     }
 
     @Override
@@ -117,10 +120,11 @@ public class DeskManagePanel extends ManagePanel {
         boolean flag = true;
         int row = jTable.getSelectedRow();
         String name = model.getValueAt(row,1).toString();
-        for(int i=0;i < (model.getRowCount()-1);i++){
-            if(name .equals(model.getValueAt(i,1).toString())){
+        for(int i=0;i < (model.getRowCount());i++){
+            if(name .equals(model.getValueAt(i,1).toString())&&i!=row){
                 flag = false;
                 JOptionPane.showMessageDialog(this,"餐台已存在","错误", JOptionPane.ERROR_MESSAGE);
+                break;
             }
 
         }

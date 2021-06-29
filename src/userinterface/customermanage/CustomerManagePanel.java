@@ -137,10 +137,17 @@ public class CustomerManagePanel extends ManagePanel {
         try{
             int row = jTable.getSelectedRow();
             String value = model.getValueAt(row,1).toString();
+            if(value.equals("")){
+                flag = false;
+            }
             value = model.getValueAt(row,5).toString();
+            if(value.equals("")){
+                flag = false;
+            }
         } catch (Exception e) {
             System.out.println("Check Failed");
-            flag = false;
+        }
+        if(!flag){
             JOptionPane.showMessageDialog(this,"信息不全","错误", JOptionPane.ERROR_MESSAGE);
         }
         return flag;
@@ -153,9 +160,10 @@ public class CustomerManagePanel extends ManagePanel {
         String name = model.getValueAt(row,1).toString();
         String code = model.getValueAt(row,5).toString();
         for(int i=0;i < (model.getRowCount()-1);i++){
-            if(name .equals(model.getValueAt(i,1).toString())||code.equals(model.getValueAt(i,5).toString())){
+            if((name .equals(model.getValueAt(i,1).toString())||code.equals(model.getValueAt(i,5).toString()))&&i!=row){
                 flag = false;
                 JOptionPane.showMessageDialog(this,"客户已存在","错误", JOptionPane.ERROR_MESSAGE);
+                break;
             }
 
         }

@@ -57,7 +57,7 @@ public class LoginFrame extends JFrame {
         });
 
         regestB = new JButton("注 册");
-        regestB.addActionListener(e->new RegestFrame());
+        regestB.addActionListener(e->new RegisterFrame());
 
         pos.weighty=1;
         gridBagLayout.addLayoutComponent(usernameL,pos);
@@ -83,22 +83,22 @@ public class LoginFrame extends JFrame {
         repaint();
     }
 
-    public boolean verify(){
+    private boolean verify(){
+
         String username = usernameTf.getText();
+
+        Admin admin = new AdminDAO().getByUsername(AdminDAO.hashCode(username));
+        if(admin==null){
+            return false;
+        }
+
         String password = passwordPf.getText();
 
         boolean flag = false;
 
-        for(Admin admin:new AdminDAO().getList()){
-            System.out.println(AdminDAO.hashCode(username));
-            System.out.println(AdminDAO.hashCode(password));
-            System.out.println(admin.getUsername());
-            System.out.println(admin.getPassword());
-            if(admin.getUsername().equals(AdminDAO.hashCode(username))&&admin.getPassword().equals(AdminDAO.hashCode(password))){
+            if(admin.getUsername().equals(AdminDAO.hashCode(username))&&admin.getPassword().equals(AdminDAO.hashCode(password))) {
                 flag = true;
-                break;
             }
-        }
 
         return flag;
     }

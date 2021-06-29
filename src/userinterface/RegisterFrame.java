@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegestFrame extends JFrame {
+public class RegisterFrame extends JFrame {
     private final int HEIGHT = 200;
     private final int WIDTH  = 300;
 
@@ -25,7 +25,7 @@ public class RegestFrame extends JFrame {
         loginP.add(c,constraints);
     }
 
-    public RegestFrame(){
+    public RegisterFrame(){
         super("注册 ");
 
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -53,7 +53,7 @@ public class RegestFrame extends JFrame {
         regestB = new JButton("确 定");
         regestB.addActionListener(e->{
             if(verify()){
-                regestUser();
+                registerUser();
                 dispose();
             }
         });
@@ -104,17 +104,11 @@ public class RegestFrame extends JFrame {
             return false;
         }
 
-        for (Admin admin : new AdminDAO().getList()) {
-            if (admin.getUsername().equals(AdminDAO.hashCode(username))) {
-                JOptionPane.showMessageDialog(loginP,"用户名已存在，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        }
-
-        return true;
+        Admin admin = new AdminDAO().getByUsername(AdminDAO.hashCode(username));
+        return admin == null;
     }
 
-    public void regestUser(){
+    public void registerUser(){
         String username = usernameTf.getText();
         String password = passwordPf.getText();
 

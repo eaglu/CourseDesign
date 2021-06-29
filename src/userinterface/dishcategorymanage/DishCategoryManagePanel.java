@@ -115,6 +115,7 @@ public class DishCategoryManagePanel extends ManagePanel {
             if(name.equals(model.getValueAt(i,1).toString())&&i!=row){
                 flag = false;
                 JOptionPane.showMessageDialog(this,"该类菜品已存在","错误", JOptionPane.ERROR_MESSAGE);
+                break;
             }
 
         }

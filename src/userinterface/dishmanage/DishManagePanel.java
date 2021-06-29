@@ -151,10 +151,11 @@ public class DishManagePanel extends ManagePanel {
         System.out.println("name = " + name);
         String code = model.getValueAt(row,4).toString();
         System.out.println("code = " + code);
-        for(int i=0;i < model.getRowCount()-1;i++){
-            if(name .equals(model.getValueAt(i,1).toString())||code.equals(model.getValueAt(i,4).toString())){
+        for(int i=0;i < model.getRowCount();i++){
+            if((name .equals(model.getValueAt(i,1).toString())||code.equals(model.getValueAt(i,4).toString()))&&i!=row){
                 flag = false;
                 JOptionPane.showMessageDialog(this,"菜品已存在","错误", JOptionPane.ERROR_MESSAGE);
+                break;
             }
 
         }

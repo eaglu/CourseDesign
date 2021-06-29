@@ -1,6 +1,7 @@
 package entitydatabase;
 
 import entity.Admin;
+import entity.DishCategory;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDAO implements BaseDAO<Admin>{
+
+    public Admin getByUsername(String username){
+        Connection conn = DBManager.getConn();
+        PreparedStatement ps;
+        ResultSet rs = null;
+        String sql = "select * from admin where username = ?";
+        try{
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,username);
+            rs = ps.executeQuery();
+        } catch (SQLException throwables) {
+            return null;
+        }
+        Admin admin = new Admin();
+        try{
+            rs.next();
+            admin.setUsername(rs.getString("username"));
+            admin.setPassword(rs.getString("password"));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  admin;
+    }
+
     @Override
     public List<Admin> getList() {
         Connection conn = DBManager.getConn();
