@@ -2,8 +2,10 @@ package userinterface.customermanage;
 
 import entity.Customer;
 import entity.Desk;
+import entity.DishCategory;
 import entitydatabase.CustomerDAO;
 import entitydatabase.DeskDAO;
+import entitydatabase.DishCategoryDAO;
 import userinterface.ManagePanel;
 
 import javax.swing.*;
@@ -106,10 +108,57 @@ public class CustomerManagePanel extends ManagePanel {
             customers.add(customer);
         }
         new CustomerDAO().saveList(customers);
+        List<Customer> customers1 = new CustomerDAO().getList();
+        for(int i=rowLength;i<model.getRowCount();i++){
+            model.setValueAt(customers1.get(i).getId(),rowLength,0);
+        }
     }
 
     @Override
     public void searchByRule() {
+        boolean flag = false;
+        for(int i=0;i<model.getRowCount();i++){
+            if(model.getValueAt(i,0).toString().equals(labelContent)||model.getValueAt(i,5).equals(labelContent)){
+                jTable.setRowSelectionInterval(i,i);
+                flag = true;
+                searchPanel.setVisible(false);
+                bottomPanel.setVisible(true);
+                break;
+            }
+        }
+        if(!flag){
+            JOptionPane.showMessageDialog(this,"未找到对应信息","错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
+    @Override
+    protected boolean checkNull() {
+        boolean flag = true;
+        try{
+            int row = jTable.getSelectedRow();
+            String value = model.getValueAt(row,1).toString();
+            value = model.getValueAt(row,5).toString();
+        } catch (Exception e) {
+            System.out.println("Check Failed");
+            flag = false;
+            JOptionPane.showMessageDialog(this,"信息不全","错误", JOptionPane.ERROR_MESSAGE);
+        }
+        return flag;
+    }
+
+    @Override
+    protected boolean checkConflict() {
+        boolean flag = true;
+        int row = jTable.getSelectedRow();
+        String name = model.getValueAt(row,1).toString();
+        String code = model.getValueAt(row,5).toString();
+        for(int i=0;i < (model.getRowCount()-1);i++){
+            if(name .equals(model.getValueAt(i,1).toString())||code.equals(model.getValueAt(i,5).toString())){
+                flag = false;
+                JOptionPane.showMessageDialog(this,"客户已存在","错误", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+        return flag;
     }
 }

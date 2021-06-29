@@ -5,8 +5,6 @@ import entitydatabase.AdminDAO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginFrame extends JFrame {
     private final int HEIGHT = 200;
@@ -15,8 +13,8 @@ public class LoginFrame extends JFrame {
     private JLabel usernameL,passwordL;
     private JTextField usernameTf;
     private JPasswordField passwordPf;
-    private JButton loginB;
-    private JPanel loginP;
+    private JButton loginB,regestB;
+    private JPanel loginP,buttomP;
 
     public void add(Component c,GridBagConstraints constraints,int x,int y,int w,int h){
         constraints.gridx = x;
@@ -32,6 +30,8 @@ public class LoginFrame extends JFrame {
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints pos = new GridBagConstraints();
 
+        setLayout(new FlowLayout());
+
         loginP = new JPanel();
         loginP.setLayout(gridBagLayout);
 
@@ -44,6 +44,8 @@ public class LoginFrame extends JFrame {
 
         passwordPf = new JPasswordField(20);
 
+        buttomP = new JPanel(new FlowLayout());
+
         loginB = new JButton("登 陆");
         loginB.addActionListener(e->{
             if(verify()){
@@ -54,6 +56,9 @@ public class LoginFrame extends JFrame {
             }
         });
 
+        regestB = new JButton("注 册");
+        regestB.addActionListener(e->new RegestFrame());
+
         pos.weighty=1;
         gridBagLayout.addLayoutComponent(usernameL,pos);
         gridBagLayout.addLayoutComponent(usernameTf,pos);
@@ -62,17 +67,15 @@ public class LoginFrame extends JFrame {
         gridBagLayout.addLayoutComponent(passwordL,pos);
         gridBagLayout.addLayoutComponent(passwordPf,pos);
 
-        pos.gridy=2;
-        pos.gridx=1;
-        gridBagLayout.addLayoutComponent(loginB,pos);
-
         loginP.add(usernameL);
         loginP.add(usernameTf);
         loginP.add(passwordL);
         loginP.add(passwordPf);
-        loginP.add(loginB);
+        buttomP.add(loginB);
+        buttomP.add(regestB);
 
-        setContentPane(loginP);
+        add(loginP);
+        add(buttomP);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -82,16 +85,16 @@ public class LoginFrame extends JFrame {
 
     public boolean verify(){
         String username = usernameTf.getText();
-        String password = new String((passwordPf.getPassword()));
+        String password = passwordPf.getText();
 
         boolean flag = false;
 
         for(Admin admin:new AdminDAO().getList()){
-            System.out.println(username);
-            System.out.println(password);
+            System.out.println(AdminDAO.hashCode(username));
+            System.out.println(AdminDAO.hashCode(password));
             System.out.println(admin.getUsername());
             System.out.println(admin.getPassword());
-            if(admin.getUsername().equals(username)&&admin.getPassword().equals(password)){
+            if(admin.getUsername().equals(AdminDAO.hashCode(username))&&admin.getPassword().equals(AdminDAO.hashCode(password))){
                 flag = true;
                 break;
             }

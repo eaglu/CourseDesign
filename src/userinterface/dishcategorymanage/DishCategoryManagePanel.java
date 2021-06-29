@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class DishCategoryManagePanel extends ManagePanel {
-    DishCategorySearchFrame categorySearchFrame;
 
     public DishCategoryManagePanel(){
-        search.addActionListener(e->new DishCategorySearchFrame());
     }
 
     public void getTable(){
@@ -85,10 +83,41 @@ public class DishCategoryManagePanel extends ManagePanel {
             dishCategories.add(dishCategory);
         }
         new DishCategoryDAO().saveList(dishCategories);
+        List<DishCategory> dishCategories1 = new DishCategoryDAO().getList();
+        for(int i=rowLength;i<model.getRowCount();i++){
+            model.setValueAt(dishCategories1.get(i).getId(),rowLength,0);
+        }
     }
 
     @Override
     public void searchByRule() {
+        boolean flag = false;
+        for(int i=0;i<model.getRowCount();i++){
+            if(model.getValueAt(i,0).toString().equals(labelContent)||model.getValueAt(i,1).equals(labelContent)){
+                jTable.setRowSelectionInterval(i,i);
+                flag = true;
+                searchPanel.setVisible(false);
+                bottomPanel.setVisible(true);
+                break;
+            }
+        }
+        if(!flag){
+            JOptionPane.showMessageDialog(this,"未找到对应信息","错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
+    @Override
+    protected boolean checkConflict() {
+        boolean flag = true;
+        int row = jTable.getSelectedRow();
+        String name = model.getValueAt(row,1).toString();
+        for(int i=0;i < model.getRowCount();i++){
+            if(name.equals(model.getValueAt(i,1).toString())&&i!=row){
+                flag = false;
+                JOptionPane.showMessageDialog(this,"该类菜品已存在","错误", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+        return flag;
     }
 }

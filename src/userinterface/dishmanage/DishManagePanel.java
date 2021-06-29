@@ -101,6 +101,10 @@ public class DishManagePanel extends ManagePanel {
             dishes.add(dish);
         }
         new DishDAO().saveList(dishes);
+        List<Dish> dishes1 = new DishDAO().getList();
+        for(int i=rowLength;i<model.getRowCount();i++){
+            model.setValueAt(dishes1.get(i).getId(),rowLength,0);
+        }
     }
 
     @Override
@@ -124,10 +128,63 @@ public class DishManagePanel extends ManagePanel {
 
     @Override
     public void searchByRule() {
+        boolean flag = false;
         for(int i=0;i<model.getRowCount();i++){
-            if(model.getValueAt(i,1).equals(labelContent)||model.getValueAt(i,2).equals(labelContent)){
+            if(model.getValueAt(i,0).toString().equals(labelContent)||model.getValueAt(i,1).equals(labelContent)||model.getValueAt(i,4).equals(labelContent)){
                 jTable.setRowSelectionInterval(i,i);
+                flag = true;
+                searchPanel.setVisible(false);
+                bottomPanel.setVisible(true);
+                break;
             }
         }
+        if(!flag){
+            JOptionPane.showMessageDialog(this,"未找到对应信息","错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    protected boolean checkConflict() {
+        boolean flag = true;
+        int row = jTable.getSelectedRow();
+        String name = model.getValueAt(row,1).toString();
+        System.out.println("name = " + name);
+        String code = model.getValueAt(row,4).toString();
+        System.out.println("code = " + code);
+        for(int i=0;i < model.getRowCount()-1;i++){
+            if(name .equals(model.getValueAt(i,1).toString())||code.equals(model.getValueAt(i,4).toString())){
+                flag = false;
+                JOptionPane.showMessageDialog(this,"菜品已存在","错误", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+        System.out.println(flag);
+        return flag;
+    }
+
+    @Override
+    protected boolean checkNull() {
+        boolean flag = true;
+        try{
+            int row = jTable.getSelectedRow();
+            for(int i= 1;i<model.getColumnCount();i++){
+                if(i==3){
+                    continue;
+                }
+                String value = model.getValueAt(row,i).toString();
+                System.out.println("value = " + value);
+                if (value.equals("")){
+                    flag = false;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Check Failed");
+            flag = false;
+        }
+        if(!flag){
+            JOptionPane.showMessageDialog(this,"信息不完整","错误", JOptionPane.ERROR_MESSAGE);
+        }
+        System.out.println("Check passed");
+        return flag;
     }
 }

@@ -5,11 +5,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Vector;
 
-public abstract class ManagePanel extends JPanel {
+public abstract class ManagePanel extends JPanel{
     protected JScrollPane jScrollPane;
     protected JPanel bottomPanel,searchPanel;
+    protected JLabel contentLabel;
+    protected JTextField contentFiled;
     protected JTable jTable;
-    protected JButton add,delete,save,update,search;
+    protected JButton add,delete,save,update,search,confirm;
     protected GridBagLayout gridBagLayout;
     protected GridBagConstraints pos;
     protected DefaultTableModel model;
@@ -47,6 +49,8 @@ public abstract class ManagePanel extends JPanel {
         add(jScrollPane);
         add(bottomPanel);
         setVisible(true);
+
+        System.out.println("rowLength = "+rowLength);
     }
 
     public void addScrollPanel(){
@@ -57,41 +61,33 @@ public abstract class ManagePanel extends JPanel {
     }
 
     public void addSearchPanel(){
-        JPanel panel;
-        JPanel bottomPanel;
-        JButton confirm;
-        JLabel label;
-        JTextField content;
-        JTextArea info;
-
         GridBagLayout gridBagLayout = new GridBagLayout();
         GridBagConstraints pos = new GridBagConstraints();
 
         searchPanel = new JPanel();
         searchPanel.setLayout(gridBagLayout);
 
+        contentLabel = new JLabel("输入要查询的信息");
 
-        label = new JLabel("序号");
-
-        content = new JTextField(20);
-
+        contentFiled = new JTextField(20);
 
         confirm = new JButton("确 定");
         confirm.addActionListener(e->{
-            labelContent =  content.getText();
+            labelContent =  contentFiled.getText();
+            System.out.println("OnPanel"+labelContent);
             searchByRule();
         });
 
         pos.weighty=1;
-        gridBagLayout.addLayoutComponent(label,pos);
-        gridBagLayout.addLayoutComponent(content,pos);
+        gridBagLayout.addLayoutComponent(contentLabel,pos);
+        gridBagLayout.addLayoutComponent(contentFiled,pos);
 
         pos.gridy=2;
         pos.gridx=1;
         gridBagLayout.addLayoutComponent(confirm,pos);
 
-        searchPanel.add(label);
-        searchPanel.add(content);
+        searchPanel.add(contentLabel);
+        searchPanel.add(contentFiled);
         searchPanel.add(confirm);
 
         setVisible(true);
@@ -113,21 +109,34 @@ public abstract class ManagePanel extends JPanel {
     }
 
     public void delete(){
-        delete.addActionListener(e->deleteLine());
+        delete.addActionListener(e->{
+            deleteLine();
+            updateUI();
+        });
     }
 
     public abstract void deleteLine();
 
-    public void save(){
+    public void save(){;
         save.addActionListener(e->{
-            saveData();
-            updateTable();
+            if(checkNull()) {
+                if(checkConflict()) {
+                    saveData();
+                    updateUI();
+                }
+            }
           }
         );
     }
 
     public void update(){
-        update.addActionListener(e->updateData());
+        update.addActionListener(e->{
+            if(checkNull()) {
+                if(checkConflict()) {
+                    updateData();
+                }
+            }
+        });
     }
 
     public abstract void updateData();
@@ -136,18 +145,40 @@ public abstract class ManagePanel extends JPanel {
 
     public abstract void getTable();
 
-    public void updateTable(){
-        getTable();
-        updateUI();
-    }
-
     public void search(){
         search.addActionListener(e->{
             bottomPanel.setVisible(false);
             addSearchPanel();
-            System.out.println(labelContent);
         });
     }
 
     public abstract void searchByRule();
+
+    protected boolean checkNull(){
+        boolean flag = true;
+        try{
+            int row = jTable.getSelectedRow();
+            for(int i= 1;i<model.getColumnCount();i++){
+                String value = model.getValueAt(row,i).toString();
+                System.out.println("value = " + value);
+                if (value.equals("")){
+                    flag = false;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Check Failed");
+            flag = false;
+        }
+        if(!flag){
+            JOptionPane.showMessageDialog(this,"信息不完整","错误", JOptionPane.ERROR_MESSAGE);
+        }
+        System.out.println("Check passed");
+        return flag;
+    }
+
+    protected abstract boolean checkConflict();
+
+    public void updateTable(){
+        getTable();
+    }
 }

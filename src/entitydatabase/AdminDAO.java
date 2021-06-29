@@ -2,6 +2,10 @@ package entitydatabase;
 
 import entity.Admin;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,8 +58,8 @@ public class AdminDAO implements BaseDAO<Admin>{
         }
         try{
             for(Admin admin:list){
-                ps.setString(1,admin.getUsername());
-                ps.setString(2,admin.getPassword());
+                ps.setString(1,hashCode(admin.getUsername()));
+                ps.setString(2,hashCode(admin.getPassword()));
                 ps.executeUpdate();
             }
         } catch (Exception e) {
@@ -132,5 +136,17 @@ public class AdminDAO implements BaseDAO<Admin>{
     @Override
     public void update(Admin object) {
 
+    }
+
+    public static String hashCode(String text){
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(text.getBytes(StandardCharsets.UTF_8));
+            byte[] result = md.digest();
+            return new BigInteger(1,result).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
