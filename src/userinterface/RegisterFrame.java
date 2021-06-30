@@ -52,10 +52,11 @@ public class RegisterFrame extends JFrame {
 
         regestB = new JButton("确 定");
         regestB.addActionListener(e->{
-            if(verify()){
-                registerUser();
-                dispose();
-            }
+//            if(verify()){
+//                registerUser();
+//                dispose();
+//            }
+            Edge.verifyRegister(usernameTf.getText(),passwordPf.getText(),confirmPasswordT.getText());
         });
 
         pos.weighty=1;

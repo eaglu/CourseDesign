@@ -34,7 +34,7 @@ public class AdminDAO implements BaseDAO<Admin>{
             admin.setUsername(rs.getString("username"));
             admin.setPassword(rs.getString("password"));
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         }
         return  admin;
     }
@@ -150,7 +150,23 @@ public class AdminDAO implements BaseDAO<Admin>{
 
     @Override
     public void save(Admin object) {
+        Connection conn = DBManager.getConn();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "insert into admin(username,password) values (?,?)";
+        try{
+            ps = conn.prepareStatement(sql);
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+       try {
+                ps.setString(1,hashCode(object.getUsername()));
+                ps.setString(2,hashCode(object.getPassword()));
+                ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -48,12 +48,13 @@ public class LoginFrame extends JFrame {
 
         loginB = new JButton("登 陆");
         loginB.addActionListener(e->{
-            if(verify()){
-                new MainFrame();
-                dispose();
-            }else {
-                JOptionPane.showMessageDialog(loginP,"密码或账号错误，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
-            }
+//            if(verify()){
+//                new MainFrame();
+//                dispose();
+//            }else {
+//                JOptionPane.showMessageDialog(loginP,"密码或账号错误，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
+//            }
+            Edge.verifyLogin(usernameTf.getText(),passwordPf.getText());
         });
 
         regestB = new JButton("注 册");
