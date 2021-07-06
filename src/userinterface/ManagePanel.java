@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Vector;
 
+//各管理界面父类
 public abstract class ManagePanel extends JPanel{
     protected JScrollPane jScrollPane;
     protected JPanel bottomPanel,searchPanel;
@@ -93,6 +94,7 @@ public abstract class ManagePanel extends JPanel{
         add(searchPanel);
     }
 
+    //在表格中添加新行
     public void addLine(){
         Vector<String[]> blankRow = new Vector<>();
         ((DefaultTableModel) jTable.getModel()).addRow(blankRow);
@@ -106,6 +108,7 @@ public abstract class ManagePanel extends JPanel{
         add.addActionListener(e-> addLine());
     }
 
+    //调用删除功能
     public void delete(){
         delete.addActionListener(e->{
             deleteLine();
@@ -115,6 +118,7 @@ public abstract class ManagePanel extends JPanel{
 
     public abstract void deleteLine();
 
+    //调用保存功能
     public void save(){
         save.addActionListener(e->{
                     saveData();
@@ -125,16 +129,20 @@ public abstract class ManagePanel extends JPanel{
         );
     }
 
+    //调用修改功能呢
     public void update(){
         update.addActionListener(e-> updateData());
     }
 
     public abstract void updateData();
 
+    //保存新加的行
     public abstract void saveData();
 
+    //获取数据库设计到表格中
     public abstract void getTable();
 
+    //调用搜素功能
     public void search(){
         search.addActionListener(e->{
             bottomPanel.setVisible(false);
@@ -143,6 +151,4 @@ public abstract class ManagePanel extends JPanel{
     }
 
     public abstract void searchByRule();
-
-
 }

@@ -8,6 +8,7 @@ import userinterface.dishmanage.DishManagePanel;
 import javax.swing.*;
 import java.awt.*;
 
+//主程序设计
 public class MainFrame extends JFrame {
     protected JMenuBar jmb;
     protected JPanel jp;

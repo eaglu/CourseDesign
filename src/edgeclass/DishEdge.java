@@ -10,7 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
+//中间层，用于实现界面层与服务层之间的操作
 public class DishEdge {
+        //对界面层数据进行查空
         private static boolean checkNull(JTable jTable, DefaultTableModel model){
             boolean flag = true;
             try{
@@ -34,7 +36,7 @@ public class DishEdge {
             }
             return flag;
         }
-
+        //对界面层数据进行查空
         private static boolean checkConflict(JTable jTable, DefaultTableModel model) {
             boolean flag = true;
             int row = jTable.getSelectedRow();
@@ -52,7 +54,7 @@ public class DishEdge {
             }
             return flag;
         }
-
+        //保存数据
         public static void saveData(JTable jTable,int rowLength,DefaultTableModel model) {
             if(checkNull(jTable,model)) {
                 if(checkConflict(jTable, model)) {
@@ -76,7 +78,7 @@ public class DishEdge {
                 }
             }
         }
-
+    //删除数据
         public static void deleteLine(JTable jTable, DefaultTableModel model) {
             if(checkNull(jTable, model)) {
                 if(checkConflict(jTable, model)) {
@@ -102,8 +104,7 @@ public class DishEdge {
                 }
             }
         }
-
-
+    //修改数据
         public static void updateData(JTable jTable,DefaultTableModel model) {
             if(checkNull(jTable, model)) {
                 if(checkConflict(jTable, model)) {
@@ -125,7 +126,7 @@ public class DishEdge {
                 }
             }
         }
-
+    //搜素数据
         public static void searchByRule(String labelContent,DefaultTableModel model,JTable jTable,JPanel searchPanel,JPanel bottomPanel) {
             boolean flag = false;
             for(int i=0;i<model.getRowCount();i++){
@@ -141,5 +142,4 @@ public class DishEdge {
                 ErrorPanel.ShowMessage("未找到对应信息");
             }
         }
-
 }

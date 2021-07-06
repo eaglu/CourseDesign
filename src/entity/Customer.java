@@ -1,5 +1,7 @@
 package entity;
 
+
+//客户实体类
 public class Customer {
     int id;
     String name,sex,company,tel,cardID;

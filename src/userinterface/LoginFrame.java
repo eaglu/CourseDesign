@@ -15,14 +15,6 @@ public class LoginFrame extends JFrame {
     private JButton loginB,regestB;
     private JPanel loginP,buttomP;
 
-    public void add(Component c,GridBagConstraints constraints,int x,int y,int w,int h){
-        constraints.gridx = x;
-        constraints.gridy = y;
-        constraints.gridwidth = w;
-        constraints.gridheight = h;
-        loginP.add(c,constraints);
-    }
-
     public LoginFrame(){
         super("登陆");
 
@@ -46,6 +38,8 @@ public class LoginFrame extends JFrame {
         buttomP = new JPanel(new FlowLayout());
 
         loginB = new JButton("登 陆");
+
+        //触发器，用于实现登录验证功能
         loginB.addActionListener(e-> LoReEdge.verifyLogin(usernameTf.getText(),passwordPf.getText()));
 
         regestB = new JButton("注 册");

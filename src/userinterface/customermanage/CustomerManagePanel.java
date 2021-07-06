@@ -9,7 +9,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
-public class CustomerManagePanel extends ManagePanel {
+//客户管理界面
+public class  CustomerManagePanel extends ManagePanel {
     public CustomerManagePanel(){
     }
 
@@ -66,6 +67,4 @@ public class CustomerManagePanel extends ManagePanel {
     public void searchByRule() {
         CustomerEdge.searchByRule(labelContent,model,jTable,searchPanel,bottomPanel);
     }
-
-
 }

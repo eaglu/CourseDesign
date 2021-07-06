@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="restmanager@localhost" uuid="e052b780-0b54-4d83-a5ca-09b526303c02">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3307/restmanager</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-      <driver-properties>
-        <property name="serverTimezone" value="GMT" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="MySQL - restmanager@localhost" uuid="1b3f66c6-9e44-4c7c-aa26-a9bff07da1bc">
+    <data-source source="LOCAL" name="restmanager@localhost" uuid="0227f4e5-5539-4b95-b875-3a6e87092a84">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

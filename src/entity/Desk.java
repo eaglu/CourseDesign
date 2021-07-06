@@ -1,5 +1,6 @@
 package entity;
 
+//餐桌实体类
 public class Desk {
     private int id,seating;
     private String no,status;

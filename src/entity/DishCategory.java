@@ -1,8 +1,7 @@
 package entity;
 
-import java.io.Serializable;
-
-public class DishCategory implements Serializable {
+//菜品种类实体类
+public class DishCategory  {
     private int id;
     private String name;
     private String describe;

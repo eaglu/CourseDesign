@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
+//菜品管理界面
 public class DishCategoryManagePanel extends ManagePanel {
 
     public DishCategoryManagePanel(){

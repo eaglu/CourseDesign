@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+//菜品信息管理界面
 public class DishManagePanel extends ManagePanel {
     @Override
     public void getTable() {
@@ -82,5 +83,4 @@ public class DishManagePanel extends ManagePanel {
     public void searchByRule() {
         DishEdge.searchByRule(labelContent,model,jTable,searchPanel,bottomPanel);
     }
-
 }
