@@ -1,5 +1,6 @@
 package userinterface.dishmanage;
 
+import edgeclass.DishEdge;
 import entity.Dish;
 import entity.DishCategory;
 import entitydatabase.DishCategoryDAO;
@@ -13,9 +14,6 @@ import java.util.List;
 import java.util.Vector;
 
 public class DishManagePanel extends ManagePanel {
-    public DishManagePanel(){
-        search.addActionListener(e->new DishSearchFrame());
-    }
     @Override
     public void getTable() {
         model = new DefaultTableModel(){
@@ -66,64 +64,67 @@ public class DishManagePanel extends ManagePanel {
 
     @Override
     public void deleteLine() {
-        List<Dish> dishes = new ArrayList<>();
-
-        int[] rowList = jTable.getSelectedRows();
-        for (int i : rowList) {
-            Dish dish = new Dish();
-            dish.setId(Integer.parseInt(model.getValueAt(i, 0).toString()));
-            dish.setName(model.getValueAt(i,1).toString());
-            dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
-            dish.setPic(model.getValueAt(i,3).toString());
-            dish.setCode(model.getValueAt(i,4).toString());
-            dish.setUnit(model.getValueAt(i,5).toString());
-            dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
-            dish.setStatus(model.getValueAt(i,7).toString());
-            dishes.add(dish);
-        }
-
-        new DishDAO().deleteList(dishes);
-        model.removeRow(jTable.getSelectedRow());
+//        List<Dish> dishes = new ArrayList<>();
+//
+//        int[] rowList = jTable.getSelectedRows();
+//        for (int i : rowList) {
+//            Dish dish = new Dish();
+//            dish.setId(Integer.parseInt(model.getValueAt(i, 0).toString()));
+//            dish.setName(model.getValueAt(i,1).toString());
+//            dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
+//            dish.setPic(model.getValueAt(i,3).toString());
+//            dish.setCode(model.getValueAt(i,4).toString());
+//            dish.setUnit(model.getValueAt(i,5).toString());
+//            dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
+//            dish.setStatus(model.getValueAt(i,7).toString());
+//            dishes.add(dish);
+//        }
+//
+//        new DishDAO().deleteList(dishes);
+//        model.removeRow(jTable.getSelectedRow());
+        DishEdge.deleteLine(jTable,model);
     }
 
     @Override
     public void saveData() {
-        List<Dish> dishes = new ArrayList<>();
-        for(int i=rowLength;i<(model.getRowCount());i++){
-            Dish dish = new Dish();
-            dish.setName(model.getValueAt(i,1).toString());
-            dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
-            dish.setPic(model.getValueAt(i,3).toString());
-            dish.setCode(model.getValueAt(i,4).toString());
-            dish.setUnit(model.getValueAt(i,5).toString());
-            dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
-            dish.setStatus(model.getValueAt(i,7).toString());
-            dishes.add(dish);
-        }
-        new DishDAO().saveList(dishes);
-        List<Dish> dishes1 = new DishDAO().getList();
-        for(int i=rowLength;i<model.getRowCount();i++){
-            model.setValueAt(dishes1.get(i).getId(),rowLength,0);
-        }
+//        List<Dish> dishes = new ArrayList<>();
+//        for(int i=rowLength;i<(model.getRowCount());i++){
+//            Dish dish = new Dish();
+//            dish.setName(model.getValueAt(i,1).toString());
+//            dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
+//            dish.setPic(model.getValueAt(i,3).toString());
+//            dish.setCode(model.getValueAt(i,4).toString());
+//            dish.setUnit(model.getValueAt(i,5).toString());
+//            dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
+//            dish.setStatus(model.getValueAt(i,7).toString());
+//            dishes.add(dish);
+//        }
+//        new DishDAO().saveList(dishes);
+//        List<Dish> dishes1 = new DishDAO().getList();
+//        for(int i=rowLength;i<model.getRowCount();i++){
+//            model.setValueAt(dishes1.get(i).getId(),rowLength,0);
+//        }
+        DishEdge.saveData(jTable,rowLength,model);
     }
 
     @Override
     public void updateData() {
-        List<Dish> dishes = new ArrayList<>();
-        for(int i=0;i<model.getRowCount();i++){
-            int id = Integer.parseInt(model.getValueAt(i,0).toString());
-            Dish dish = new Dish();
-            dish.setId(id);
-            dish.setName(model.getValueAt(i,1).toString());
-            dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
-            dish.setPic(model.getValueAt(i,3).toString());
-            dish.setCode(model.getValueAt(i,4).toString());
-            dish.setUnit(model.getValueAt(i,5).toString());
-            dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
-            dish.setStatus(model.getValueAt(i,7).toString());
-            dishes.add(dish);
-        }
-        new DishDAO().updateList(dishes);
+//        List<Dish> dishes = new ArrayList<>();
+//        for(int i=0;i<model.getRowCount();i++){
+//            int id = Integer.parseInt(model.getValueAt(i,0).toString());
+//            Dish dish = new Dish();
+//            dish.setId(id);
+//            dish.setName(model.getValueAt(i,1).toString());
+//            dish.setDishCategory(new DishCategoryDAO().getCategoryById(Integer.parseInt(model.getValueAt(i,2).toString())));
+//            dish.setPic(model.getValueAt(i,3).toString());
+//            dish.setCode(model.getValueAt(i,4).toString());
+//            dish.setUnit(model.getValueAt(i,5).toString());
+//            dish.setPrice(Double.parseDouble(model.getValueAt(i,6).toString()));
+//            dish.setStatus(model.getValueAt(i,7).toString());
+//            dishes.add(dish);
+//        }
+//        new DishDAO().updateList(dishes);
+        DishEdge.updateData(jTable,model);
     }
 
     @Override
@@ -143,7 +144,6 @@ public class DishManagePanel extends ManagePanel {
         }
     }
 
-    @Override
     protected boolean checkConflict() {
         boolean flag = true;
         int row = jTable.getSelectedRow();
@@ -159,11 +159,8 @@ public class DishManagePanel extends ManagePanel {
             }
 
         }
-        System.out.println(flag);
         return flag;
     }
-
-    @Override
     protected boolean checkNull() {
         boolean flag = true;
         try{
@@ -185,7 +182,6 @@ public class DishManagePanel extends ManagePanel {
         if(!flag){
             JOptionPane.showMessageDialog(this,"信息不完整","错误", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println("Check passed");
         return flag;
     }
 }

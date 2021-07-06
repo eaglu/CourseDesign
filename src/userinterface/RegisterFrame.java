@@ -1,5 +1,6 @@
 package userinterface;
 
+import edgeclass.LoReEdge;
 import entity.Admin;
 import entitydatabase.AdminDAO;
 
@@ -56,7 +57,7 @@ public class RegisterFrame extends JFrame {
 //                registerUser();
 //                dispose();
 //            }
-            Edge.verifyRegister(usernameTf.getText(),passwordPf.getText(),confirmPasswordT.getText());
+            LoReEdge.verifyRegister(usernameTf.getText(),passwordPf.getText(),confirmPasswordT.getText());
         });
 
         pos.weighty=1;

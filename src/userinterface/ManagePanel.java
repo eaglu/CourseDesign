@@ -49,8 +49,6 @@ public abstract class ManagePanel extends JPanel{
         add(jScrollPane);
         add(bottomPanel);
         setVisible(true);
-
-        System.out.println("rowLength = "+rowLength);
     }
 
     public void addScrollPanel(){
@@ -119,23 +117,17 @@ public abstract class ManagePanel extends JPanel{
 
     public void save(){;
         save.addActionListener(e->{
-            if(checkNull()) {
-                if(checkConflict()) {
                     saveData();
+                    rowLength = model.getRowCount();
                     updateUI();
-                }
-            }
+
           }
         );
     }
 
     public void update(){
         update.addActionListener(e->{
-            if(checkNull()) {
-                if(checkConflict()) {
                     updateData();
-                }
-            }
         });
     }
 
@@ -154,31 +146,5 @@ public abstract class ManagePanel extends JPanel{
 
     public abstract void searchByRule();
 
-    protected boolean checkNull(){
-        boolean flag = true;
-        try{
-            int row = jTable.getSelectedRow();
-            for(int i= 1;i<model.getColumnCount();i++){
-                String value = model.getValueAt(row,i).toString();
-                System.out.println("value = " + value);
-                if (value.equals("")){
-                    flag = false;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Check Failed");
-            flag = false;
-        }
-        if(!flag){
-            JOptionPane.showMessageDialog(this,"信息不完整","错误", JOptionPane.ERROR_MESSAGE);
-        }
-        System.out.println("Check passed");
-        return flag;
-    }
 
-    protected abstract boolean checkConflict();
-
-    public void updateTable(){
-        getTable();
-    }
 }

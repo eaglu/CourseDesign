@@ -1,5 +1,6 @@
 package userinterface;
 
+import edgeclass.LoReEdge;
 import entity.Admin;
 import entitydatabase.AdminDAO;
 
@@ -54,7 +55,7 @@ public class LoginFrame extends JFrame {
 //            }else {
 //                JOptionPane.showMessageDialog(loginP,"密码或账号错误，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
 //            }
-            Edge.verifyLogin(usernameTf.getText(),passwordPf.getText());
+            LoReEdge.verifyLogin(usernameTf.getText(),passwordPf.getText());
         });
 
         regestB = new JButton("注 册");

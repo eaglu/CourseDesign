@@ -1,11 +1,13 @@
-package userinterface;
+package edgeclass;
 
 import entity.Admin;
 import entitydatabase.AdminDAO;
+import userinterface.ErrorPanel;
+import userinterface.MainFrame;
 
 import javax.swing.*;
 
-public class Edge {
+public class LoReEdge {
     public static void verifyLogin(String username,String password){
         Admin admin = new AdminDAO().getByUsername(AdminDAO.hashCode(username));
         if(admin==null){

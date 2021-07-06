@@ -1,7 +1,10 @@
 package edgeclass;
 
-import entity.DishCategory;
+import entity.Desk;
+import entity.Dish;
+import entitydatabase.DeskDAO;
 import entitydatabase.DishCategoryDAO;
+import entitydatabase.DishDAO;
 import userinterface.ErrorPanel;
 
 import javax.swing.*;
@@ -9,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DishCategoryEdge {
+public class DeskEdge {
     private static boolean checkNull(JTable jTable, DefaultTableModel model){
         boolean flag = true;
         try{
@@ -33,10 +36,10 @@ public class DishCategoryEdge {
         boolean flag = true;
         int row = jTable.getSelectedRow();
         String name = model.getValueAt(row,1).toString();
-        for(int i=0;i < model.getRowCount();i++){
-            if(name.equals(model.getValueAt(i,1).toString())&&i!=row){
+        for(int i=0;i < (model.getRowCount());i++){
+            if(name .equals(model.getValueAt(i,1).toString())&&i!=row){
                 flag = false;
-                ErrorPanel.ShowMessage("该类菜品已存在");
+                ErrorPanel.ShowMessage("餐台已存在");
                 break;
             }
 
@@ -47,56 +50,55 @@ public class DishCategoryEdge {
     public static void saveData(JTable jTable,int rowLength,DefaultTableModel model) {
         if(checkNull(jTable,model)) {
             if(checkConflict(jTable, model)) {
-                List<DishCategory> dishCategories = new ArrayList<>();
-                for (int i = rowLength; i < model.getRowCount(); i++) {
-                    DishCategory dishCategory = new DishCategory();
-                    dishCategory.setName(model.getValueAt(i, 1).toString());
-                    dishCategory.setDescribe(model.getValueAt(i, 2).toString());
-                    dishCategories.add(dishCategory);
+                List<Desk> desks = new ArrayList<>();
+                for(int i=rowLength;i<model.getRowCount();i++){
+                    Desk desk = new Desk();
+                    desk.setNo(model.getValueAt(i,1).toString());
+                    desk.setSeating(Integer.parseInt(model.getValueAt(i,2).toString()));
+                    desk.setStatus(model.getValueAt(i,3).toString());
+                    desks.add(desk);
                 }
-                new DishCategoryDAO().saveList(dishCategories);
-                List<DishCategory> dishCategories1 = new DishCategoryDAO().getList();
-                for (int i = rowLength; i < model.getRowCount(); i++) {
-                    model.setValueAt(dishCategories1.get(i).getId(), rowLength, 0);
+                new DeskDAO().saveList(desks);
+                List<Desk> desks1 = new DeskDAO().getList();
+                for(int i=rowLength;i<model.getRowCount();i++){
+                    model.setValueAt(desks1.get(i).getId(),rowLength,0);
                 }
             }
         }
     }
 
-    public static void deleteLine(JTable jTable, DefaultTableModel model) {
-        if(checkNull(jTable, model)) {
-            if(checkConflict(jTable, model)) {
-                List<DishCategory> dishCategories = new ArrayList<>();
+    public static void deleteLine(JTable jTable,DefaultTableModel model) {
+                List<Desk> desks = new ArrayList<>();
 
                 int[] rowList = jTable.getSelectedRows();
                 for (int j : rowList) {
-                    DishCategory dishCategory = new DishCategory();
-                    dishCategory.setId(Integer.parseInt(model.getValueAt(j, 0).toString()));
-                    dishCategory.setName(model.getValueAt(j, 1).toString());
-                    dishCategory.setDescribe(model.getValueAt(j, 2).toString());
-                    dishCategories.add(dishCategory);
+                    Desk desk = new Desk();
+                    desk.setId(Integer.parseInt(model.getValueAt(j, 0).toString()));
+                    desk.setNo(model.getValueAt(j, 1).toString());
+                    desk.setSeating(Integer.parseInt(model.getValueAt(j, 2).toString()));
+                    desk.setStatus(model.getValueAt(j,3).toString());
+                    desks.add(desk);
                 }
 
-                new DishCategoryDAO().deleteList(dishCategories);
+                new DeskDAO().deleteList(desks);
                 model.removeRow(jTable.getSelectedRow());
-            }
-        }
     }
 
 
     public static void updateData(JTable jTable,DefaultTableModel model) {
         if(checkNull(jTable, model)) {
             if(checkConflict(jTable, model)) {
-                List<DishCategory> dishCategories = new ArrayList<>();
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    int id = Integer.parseInt(model.getValueAt(i, 0).toString());
-                    DishCategory dishCategory = new DishCategory();
-                    dishCategory.setId(id);
-                    dishCategory.setName((String) model.getValueAt(i, 1));
-                    dishCategory.setDescribe((String) model.getValueAt(i, 2));
-                    dishCategories.add(dishCategory);
+                List<Desk> desks = new ArrayList<>();
+                for(int i=0;i<model.getRowCount();i++){
+                    int id = Integer.parseInt(model.getValueAt(i,0).toString());
+                    Desk desk = new Desk();
+                    desk.setId(id);
+                    desk.setNo((String) model.getValueAt(i,1));
+                    desk.setSeating(Integer.parseInt(model.getValueAt(i,2).toString()));
+                    desk.setStatus(model.getValueAt(i,3).toString());
+                    desks.add(desk);
                 }
-                new DishCategoryDAO().updateList(dishCategories);
+                new DeskDAO().updateList(desks);
             }
         }
     }
