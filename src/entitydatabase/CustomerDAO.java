@@ -135,19 +135,4 @@ public class CustomerDAO implements BaseDAO<Customer> {
         }
     }
 
-
-    @Override
-    public void save(Customer object) {
-
-    }
-
-    @Override
-    public void delete(Customer object) {
-
-    }
-
-    @Override
-    public void update(Customer object) {
-
-    }
 }

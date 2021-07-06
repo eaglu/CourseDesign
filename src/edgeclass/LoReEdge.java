@@ -8,15 +8,19 @@ import userinterface.MainFrame;
 import javax.swing.*;
 
 public class LoReEdge {
+    //将传入的账号密码与数据库中存储的账户进行验证
     public static void verifyLogin(String username,String password){
         Admin admin = new AdminDAO().getByUsername(AdminDAO.hashCode(username));
-        if(admin==null){
+        if(admin==null||(!admin.getPassword().equals(AdminDAO.hashCode(password)))){
             ErrorPanel.ShowMessage("用户名或密码错误");
+            return;
         }
 
         new MainFrame();
     }
 
+
+    //用于实现注册功能
     public static void verifyRegister(String username,String password,String confirmPassword) {
 
         if(username.length()<5){

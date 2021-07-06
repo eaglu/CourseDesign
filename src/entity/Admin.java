@@ -1,5 +1,6 @@
 package entity;
 
+//Admin实体类
 public class Admin {
     private int id;
     private String username;

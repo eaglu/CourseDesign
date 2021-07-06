@@ -10,51 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//对Dish实现数据库操作
 public class DishDAO implements BaseDAO<Dish>{
-
-    public Dish getById(int id){
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "select * from dish where id = ?";
-        return getDish(id, conn, ps, rs, sql);
-    }
-
-    private Dish getDish(int id, Connection conn, PreparedStatement ps, ResultSet rs, String sql) {
-        Dish dish = new Dish();
-        try{
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1,id);
-            rs = ps.executeQuery();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try{
-            rs.next();
-            dish.setId(rs.getInt("id"));
-            dish.setName(rs.getString("name"));
-            dish.setDishCategory(new DishCategoryDAO().getCategoryById(rs.getInt("categoryid")));
-            dish.setPic(rs.getString("pic"));
-            dish.setCode(rs.getString("code"));
-            dish.setUnit(rs.getString("unit"));
-            dish.setPrice(rs.getDouble("price"));
-            dish.setStatus(rs.getString("status"));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            DBManager.close(conn,ps,rs);
-        }
-        return dish;
-    }
-
-    public Dish getByCode(int code){
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "select * from dish where code = ?";
-        return getDish(code, conn, ps, rs, sql);
-    }
-
     @Override
     public List<Dish> getList() {
         Connection conn = DBManager.getConn();
@@ -174,97 +131,6 @@ public class DishDAO implements BaseDAO<Dish>{
                 ps.setInt(8, dish.getId());
                 ps.executeUpdate();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try{
-                ps.close();
-                conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void save(Dish object) {
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        String sql = "insert into dish(name,categoryid,pic,code,unit,price,status) values(?,?,?,?,?,?,?)";
-
-        try{
-            ps = conn.prepareStatement(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try {
-                ps.setString(1, object.getName());
-                ps.setInt(2, object.getDishCategory().getId());
-                ps.setString(3,object.getPic());
-                ps.setString(4,object.getCode());
-                ps.setString(5,object.getUnit());
-                ps.setDouble(6,object.getPrice());
-                ps.setString(7,object.getStatus());
-                ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try {
-                ps.close();
-                conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void delete(Dish object) {
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        String sql = "delete from dish where id = ?";
-
-        try {
-            ps = conn.prepareStatement(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        try{
-                ps.setInt(1,object.getId());
-                ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try {
-                ps.close();
-                conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void update(Dish object) {
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        String sql = "update dish set name = ?,categoryid = ?,pic = ?,code = ?,unit = ?,price = ?,status = ? where id = ?";
-        try{
-            ps = conn.prepareStatement(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try {
-                ps.setString(1, object.getName());
-                ps.setInt(2, object.getDishCategory().getId());
-                ps.setString(3, object.getPic());
-                ps.setString(4, object.getCode());
-                ps.setString(5, object.getUnit());
-                ps.setDouble(6, object.getPrice());
-                ps.setString(7, object.getStatus());
-                ps.setInt(8, object.getId());
-                ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {

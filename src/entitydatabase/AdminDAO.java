@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//对Admin表进行操作
 public class AdminDAO implements BaseDAO<Admin>{
 
     public Admin getByUsername(String username){
@@ -148,7 +149,7 @@ public class AdminDAO implements BaseDAO<Admin>{
         }
     }
 
-    @Override
+    //保存单个
     public void save(Admin object) {
         Connection conn = DBManager.getConn();
         PreparedStatement ps = null;
@@ -160,25 +161,16 @@ public class AdminDAO implements BaseDAO<Admin>{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-       try {
-                ps.setString(1,hashCode(object.getUsername()));
-                ps.setString(2,hashCode(object.getPassword()));
-                ps.executeUpdate();
+        try {
+            ps.setString(1,hashCode(object.getUsername()));
+            ps.setString(2,hashCode(object.getPassword()));
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void delete(Admin object) {
-
-    }
-
-    @Override
-    public void update(Admin object) {
-
-    }
-
+    //对数据进行加密
     public static String hashCode(String text){
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

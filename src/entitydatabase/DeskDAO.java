@@ -10,58 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//对餐桌数据库进行操作
 public class DeskDAO implements BaseDAO<Desk>{
-
-    public Desk getDeskById(int id){
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps;
-        ResultSet rs = null;
-        String sql = "select * from desk where id = ?";
-        Desk desk = new Desk();
-        try{
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1,id);
-            rs = ps.executeQuery();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try{
-            rs.next();
-            desk.setId(rs.getInt("id"));
-            desk.setNo(rs.getString("no"));
-            desk.setSeating(rs.getInt("seating"));
-            desk.setStatus(rs.getString("status"));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return  desk;
-    }
-
-    public Desk getDeskByNo(String no){
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps;
-        ResultSet rs = null;
-        String sql = "select * from desk where no = ?";
-        Desk desk = new Desk();
-        try{
-            ps = conn.prepareStatement(sql);
-            ps.setString(1,no);
-            rs = ps.executeQuery();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try{
-            rs.next();
-            desk.setId(rs.getInt("id"));
-            desk.setNo(rs.getString("no"));
-            desk.setSeating(rs.getInt("seating"));
-            desk.setStatus(rs.getString("status"));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return  desk;
-    }
-
     @Override
     public List<Desk> getList() {
         Connection conn = DBManager.getConn();
@@ -176,20 +126,5 @@ public class DeskDAO implements BaseDAO<Desk>{
                 throwables.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void save(Desk object) {
-
-    }
-
-    @Override
-    public void delete(Desk object) {
-
-    }
-
-    @Override
-    public void update(Desk object) {
-
     }
 }

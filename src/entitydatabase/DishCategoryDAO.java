@@ -11,6 +11,7 @@ import java.util.List;
 
 public class DishCategoryDAO implements BaseDAO<DishCategory> {
 
+    //通过id获取dishcategory实例
     public DishCategory getCategoryById(int id){
         Connection conn = DBManager.getConn();
         PreparedStatement ps;
@@ -39,13 +40,7 @@ public class DishCategoryDAO implements BaseDAO<DishCategory> {
         return  dishCategory;
     }
 
-    public DishCategory getCategoryByName(String name){
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "select * from dishcategory where name = ?";
-        return getDishCategory(name, conn, rs, sql);
-    }
+
 
     private DishCategory getDishCategory(String name, Connection conn, ResultSet rs, String sql) {
         PreparedStatement ps;
@@ -181,83 +176,7 @@ public class DishCategoryDAO implements BaseDAO<DishCategory> {
         }
     }
 
-    @Override
-    public void save(DishCategory object) {
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        String sql = "insert into dishcategory(name,describ) values(?,?)";
-        try {
-            ps = conn.prepareStatement(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try {
-                ps.setString(1, object.getName());
-                ps.setString(2, object.getDescribe());
-                ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try {
-                ps.close();
-                conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
 
-    @Override
-    public void update(DishCategory object) {
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        String sql = "update dishcategory set name = ?,describ = ? where id = ?";
-        try{
-            ps = conn.prepareStatement(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try{
-                ps.setString(1,object.getName());
-                ps.setString(2, object.getDescribe());
-                ps.setInt(3,object.getId());
-                ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try{
-                ps.close();
-                conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void delete(DishCategory object) {
-        Connection conn = DBManager.getConn();
-        PreparedStatement ps = null;
-        String sql = "delete from dishcategory where id = ?";
-        try{
-            ps = conn.prepareStatement(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try{
-                ps.setInt(1,object.getId());
-                ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try{
-                ps.close();
-                conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-    }
     public static int getRowCount() {
         Connection conn = DBManager.getConn();
         PreparedStatement ps = null;
@@ -294,7 +213,4 @@ public class DishCategoryDAO implements BaseDAO<DishCategory> {
         return columnCount;
     }
 
-    public static Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
-    }
 }

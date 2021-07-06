@@ -18,14 +18,6 @@ public class RegisterFrame extends JFrame {
     private JButton regestB;
     private JPanel loginP,buttomP;
 
-    public void add(Component c,GridBagConstraints constraints,int x,int y,int w,int h){
-        constraints.gridx = x;
-        constraints.gridy = y;
-        constraints.gridwidth = w;
-        constraints.gridheight = h;
-        loginP.add(c,constraints);
-    }
-
     public RegisterFrame(){
         super("注册 ");
 
@@ -52,13 +44,10 @@ public class RegisterFrame extends JFrame {
         buttomP = new JPanel(new FlowLayout());
 
         regestB = new JButton("确 定");
-        regestB.addActionListener(e->{
-//            if(verify()){
-//                registerUser();
-//                dispose();
-//            }
-            LoReEdge.verifyRegister(usernameTf.getText(),passwordPf.getText(),confirmPasswordT.getText());
-        });
+        //触发器用于实现注册验证功能，使用Lambda表达式
+        regestB.addActionListener(e->
+            LoReEdge.verifyRegister(usernameTf.getText(),passwordPf.getText(),confirmPasswordT.getText())
+        );
 
         pos.weighty=1;
         gridBagLayout.addLayoutComponent(usernameL,pos);

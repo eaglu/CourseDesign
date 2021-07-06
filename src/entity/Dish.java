@@ -1,5 +1,6 @@
 package entity;
 
+//菜品实体类
 public class Dish {
     private int id;
     private String name;
