@@ -1,7 +1,6 @@
 package edgeclass;
 
 import entity.Dish;
-import entity.DishCategory;
 import entitydatabase.DishCategoryDAO;
 import entitydatabase.DishDAO;
 import userinterface.ErrorPanel;

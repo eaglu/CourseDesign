@@ -10,8 +10,9 @@ import javax.swing.*;
 public class LoReEdge {
     public static void verifyLogin(String username,String password){
         Admin admin = new AdminDAO().getByUsername(AdminDAO.hashCode(username));
-        if(admin==null){
+        if(admin==null||!admin.getPassword().equals(password)){
             ErrorPanel.ShowMessage("用户名或密码错误");
+            return;
         }
 
         new MainFrame();

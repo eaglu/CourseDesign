@@ -6,15 +6,13 @@ import userinterface.dishcategorymanage.DishCategoryManagePanel;
 import userinterface.dishmanage.DishManagePanel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
     protected JMenuBar jmb;
-    protected JPanel jp,secondPanel;
+    protected JPanel jp;
     protected JMenu dishManage,deskManage,customerManage;
     protected JMenuItem dish,dishCategory,desk,customer;
-    protected DefaultTableModel defaultTableModel = null;
     protected JLabel label;
 
     public MainFrame(){

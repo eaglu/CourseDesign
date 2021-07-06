@@ -2,17 +2,11 @@ package userinterface.customermanage;
 
 import edgeclass.CustomerEdge;
 import entity.Customer;
-import entity.Desk;
-import entity.DishCategory;
 import entitydatabase.CustomerDAO;
-import entitydatabase.DeskDAO;
-import entitydatabase.DishCategoryDAO;
 import userinterface.ManagePanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class CustomerManagePanel extends ManagePanel {

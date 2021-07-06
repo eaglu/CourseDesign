@@ -1,8 +1,6 @@
 package userinterface;
 
 import edgeclass.LoReEdge;
-import entity.Admin;
-import entitydatabase.AdminDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,15 +46,7 @@ public class LoginFrame extends JFrame {
         buttomP = new JPanel(new FlowLayout());
 
         loginB = new JButton("登 陆");
-        loginB.addActionListener(e->{
-//            if(verify()){
-//                new MainFrame();
-//                dispose();
-//            }else {
-//                JOptionPane.showMessageDialog(loginP,"密码或账号错误，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
-//            }
-            LoReEdge.verifyLogin(usernameTf.getText(),passwordPf.getText());
-        });
+        loginB.addActionListener(e-> LoReEdge.verifyLogin(usernameTf.getText(),passwordPf.getText()));
 
         regestB = new JButton("注 册");
         regestB.addActionListener(e->new RegisterFrame());
@@ -85,23 +75,4 @@ public class LoginFrame extends JFrame {
         repaint();
     }
 
-    private boolean verify(){
-
-        String username = usernameTf.getText();
-
-        Admin admin = new AdminDAO().getByUsername(AdminDAO.hashCode(username));
-        if(admin==null){
-            return false;
-        }
-
-        String password = passwordPf.getText();
-
-        boolean flag = false;
-
-            if(admin.getUsername().equals(AdminDAO.hashCode(username))&&admin.getPassword().equals(AdminDAO.hashCode(password))) {
-                flag = true;
-            }
-
-        return flag;
-    }
 }

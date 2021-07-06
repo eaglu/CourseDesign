@@ -1,10 +1,7 @@
 package edgeclass;
 
 import entity.Desk;
-import entity.Dish;
 import entitydatabase.DeskDAO;
-import entitydatabase.DishCategoryDAO;
-import entitydatabase.DishDAO;
 import userinterface.ErrorPanel;
 
 import javax.swing.*;

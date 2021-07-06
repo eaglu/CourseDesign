@@ -7,8 +7,6 @@ import userinterface.ManagePanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class DishCategoryManagePanel extends ManagePanel {
@@ -63,7 +61,4 @@ public class DishCategoryManagePanel extends ManagePanel {
         DishCategoryEdge.searchByRule(labelContent,model,jTable,searchPanel,bottomPanel);
     }
 
-    protected boolean checkConflict() {
-        return false;
-    }
 }

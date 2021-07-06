@@ -115,7 +115,7 @@ public abstract class ManagePanel extends JPanel{
 
     public abstract void deleteLine();
 
-    public void save(){;
+    public void save(){
         save.addActionListener(e->{
                     saveData();
                     rowLength = model.getRowCount();
@@ -126,9 +126,7 @@ public abstract class ManagePanel extends JPanel{
     }
 
     public void update(){
-        update.addActionListener(e->{
-                    updateData();
-        });
+        update.addActionListener(e-> updateData());
     }
 
     public abstract void updateData();
